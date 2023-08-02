@@ -12,7 +12,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
-    @IBOutlet weak var uiScore: UILabel!
     
     var countries = [String]()
     var score = 0
@@ -35,8 +34,7 @@ class ViewController: UIViewController {
 
     }
     
-    func threeCountries() {
-        uiScore.text = "Score: \(score)"
+    func threeCountries(action: UIAlertAction! = nil) {
         
         countries.shuffle()
         correctAncwer = Int.random(in: 0...2)
@@ -48,29 +46,19 @@ class ViewController: UIViewController {
         button3.setImage(UIImage(named: countries[2]), for: .normal)
     }
     
-    @IBAction func button1Pressed(_ sender: UIButton) {
+    @IBAction func buttonPressed(_ sender: UIButton) {
+        var alertTitle: String
         if correctAncwer == sender.tag {
+            alertTitle = "Correct"
             score += 1
         } else {
+            alertTitle = "Wrong"
             score -= 1
         }
-        threeCountries()
-    }
-    @IBAction func buttin2Pressed(_ sender: UIButton) {
-        if correctAncwer == sender.tag {
-            score += 1
-        } else {
-            score -= 1
-        }
-        threeCountries()
-    }
-    @IBAction func button3Pressed(_ sender: UIButton) {
-        if correctAncwer == sender.tag {
-            score += 1
-        } else {
-            score -= 1
-        }
-        threeCountries()
+        
+        let ac = UIAlertController(title: alertTitle, message: "Your score is \(score)", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: threeCountries))
+        present(ac, animated: true)
     }
 }
 

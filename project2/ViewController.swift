@@ -12,7 +12,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
-    @IBOutlet weak var uiScore: UILabel!
     
     var countries = [String]()
     var score = 0
@@ -21,6 +20,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Score", style: .done, target: self, action: #selector(showScore))
+        
         countries = ["estonia", "france", "germany", "ireland", "italy", "monaco",
                      "nigeria","poland", "russia","spain", "uk", "us"]
         
@@ -46,12 +48,10 @@ class ViewController: UIViewController {
             amountOfAnswers = 0
         }
         
-        title = "Score: \(score)"
-        
         countries.shuffle()
         correctAncwer = Int.random(in: 0...2)
         
-        uiScore.text = countries[correctAncwer].uppercased()
+        title = countries[correctAncwer].uppercased()
         
         button1.setImage(UIImage(named: countries[0]), for: .normal)
         button2.setImage(UIImage(named: countries[1]), for: .normal)
@@ -76,6 +76,12 @@ class ViewController: UIViewController {
         
         ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: threeCountries))
         present(ac, animated: true)
+    }
+    
+    @objc func showScore(){
+        let ac = UIAlertController(title: "Your score:", message: "\(score)", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "ok", style: .default))
+        present(ac,animated: true)
     }
 }
 
